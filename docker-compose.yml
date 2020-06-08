@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  
+  gan-app:
+    build: ./gan-app
+    ports:
+      - "8080:80"
+    networks: 
+      toolnet:
+        ipv4_address: "172.18.0.2"
+    depends_on: 
+      - api
+    links: 
+      - api
+
+  api:
+    build: ./api
+    ports:
+      - "5000:5000"
+    networks: 
+      toolnet:
+        ipv4_address: "172.18.0.3"
+
+networks: 
+  toolnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.0.0/16
