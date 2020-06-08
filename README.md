@@ -1,6 +1,6 @@
 # byogan
 
-byo-gan product for configuring, training and interacting with GANs.
+byo-gan product for configuring, training and visualizing GANs.
 
 ## Build Setup
 
