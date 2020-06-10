@@ -14,17 +14,22 @@ docker run --network="host" docker_image
 ```
 
 2/ Install dependencies manually:
-```
+
 install python dependencies:
 ```
 cd  byogan_api
 pip install requirements.txt
+
+flask run
 ```
 or
 ```
 cd byogan_api
 conda env create -f env.yml
+
+flask run
 ```
+
 
 ** Install [npm](https://www.npmjs.com/) dependencies:
 ```
