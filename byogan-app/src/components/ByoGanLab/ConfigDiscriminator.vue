@@ -106,6 +106,10 @@
                               </td>
                               </div>
                           <div style="display: flex;">
+                            <v-btn icon @click="showoutDiscriminatorGpuInfo = !showoutDiscriminatorGpuInfo" style="margin-top: 16px; margin-right: 10px;">
+                              <v-icon x-small>info</v-icon>
+                              <md-tooltip :md-active.sync="showoutDiscriminatorGpuInfo">will use GPU for faster calculations, please make sure to have NVIDIA driver installed</md-tooltip>
+                            </v-btn>
                             <v-switch 
                             v-model="gpuDiscriminator" 
                             inset 
@@ -288,7 +292,8 @@ export default {
     InitializationOptions: ['default', 'uniform', 'normal', 'Xavier uniform', 'Xavier normal', 'Kaiming uniform', 'Kaiming normal'],
     showUsedInitDInfo: false,
     usedInitDInfo: '',
-    usedInitDDescriptionInfo: ''
+    usedInitDDescriptionInfo: '',
+    showoutDiscriminatorGpuInfo: false
   }),
   created () {
     EventBus.$on('created-generator-config', generatorElement => {

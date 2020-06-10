@@ -112,11 +112,17 @@
                                   style="margin-right: 10px"
                                 ></v-text-field>                                                                
                               </td>
-                              </div>     
-                            <v-switch 
-                              v-model="gpuGenerator" 
-                              inset 
-                              :label="`GPU`"></v-switch>
+                              </div>
+                            <div style="display: flex;">
+                              <v-btn icon @click="showoutGeneratorGpuInfo = !showoutGeneratorGpuInfo" style="margin-top: 16px; margin-right: 10px;">
+                              <v-icon x-small>info</v-icon>
+                              <md-tooltip :md-active.sync="showoutGeneratorGpuInfo">will use GPU for faster calculations, please make sure to have NVIDIA driver installed</md-tooltip>
+                            </v-btn>
+                              <v-switch 
+                                v-model="gpuGenerator" 
+                                inset 
+                                :label="`GPU`"></v-switch>
+                            </div>
                               <div style="
                                   grid-auto-flow: column;
                                   display: flex;">
@@ -282,7 +288,8 @@ export default {
     initG: 'default',
     showUsedInitGInfo: false,
     usedInitGInfo: '',
-    usedInitGDescriptionInfo: ''
+    usedInitGDescriptionInfo: '',
+    showoutGeneratorGpuInfo: false
 
   }),
   computed: {

@@ -44,14 +44,22 @@
                         <md-tooltip :md-active.sync="showDataSetTypeInfo">Data set type (traditional prerared data set i.e: MNIST, ImageFolder, csv)</md-tooltip>
                       </v-btn>
                   </div>
-                  <v-text-field
-                    label="Folder Path"
-                    name="path"
-                    id="folderPath"
-                    required
-                    v-model="datasetPath"
-                    style="height: 45px; margin-bottom: 10px"
-                  ></v-text-field>
+                  <div style="
+                  grid-auto-flow: column;
+                  display: flex;">
+                    <v-text-field
+                      label="Folder Path"
+                      name="path"
+                      id="folderPath"
+                      required
+                      v-model="datasetPath"
+                      style="height: 45px; margin-bottom: 10px"
+                    ></v-text-field>
+                    <v-btn icon @click="showDataSetPathInfo = !showDataSetPathInfo" style="margin-top: 20px; margin-right: 40px;">
+                        <v-icon x-small>info</v-icon>
+                        <md-tooltip :md-active.sync="showDataSetPathInfo">path where dataset should be retrieved/stored. For more info please visit: https://pytorch.org/docs/stable/torchvision/datasets.html</md-tooltip>
+                      </v-btn>
+                  </div>
                   <div style="display: flex;">
                       <v-text-field
                         label="Batch Size"
@@ -158,7 +166,8 @@ export default {
     showDataSetInfo: false,
     configuringDataSet: false,
     waitConfigDataSet: 'Please wait until configuration of Data loader is done',
-    showDataSetTypeInfo: false
+    showDataSetTypeInfo: false,
+    showDataSetPathInfo: false
   }),
   computed: {
     validDatasetForm () {

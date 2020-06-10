@@ -4,22 +4,33 @@ byo-gan product for configuring, training and visualizing GANs.
 
 ## Build Setup
 
-** Use Docker [link](https://docs.docker.com/get-docker/):
+** Install Python dependencies:
+
+1/ Use Docker [link](https://docs.docker.com/get-docker/):
 ```
-install docker & docker-compose
-run: docker-compose up
+cd byogan_api
+docker build -t docker_image .
+docker run --network="host" docker_image
 ```
 
+2/ Install dependencies manually:
 ```
 install python dependencies:
 ```
-cd  api
+cd  byogan_api
 pip install requirements.txt
 ```
 or
 ```
-cd api
+cd byogan_api
 conda env create -f env.yml
+```
+
+** Install [npm](https://www.npmjs.com/) dependencies:
+```
+cd byogan_app
+npm install
+npm start
 ```
 
 ### Gan Presentation
