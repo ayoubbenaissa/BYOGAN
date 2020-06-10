@@ -14,7 +14,7 @@ docker run --network="host" docker_image
 ```
 
 2/ Install dependencies manually:
-```
+
 install python dependencies:
 ```
 cd  byogan_api
@@ -25,6 +25,7 @@ or
 cd byogan_api
 conda env create -f env.yml
 ```
+
 
 ** Install [npm](https://www.npmjs.com/) dependencies:
 ```
