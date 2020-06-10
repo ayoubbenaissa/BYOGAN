@@ -80,6 +80,7 @@
                                   type="number"
                                   outlined
                                   required
+                                  :rules="[rules.positiv]"
                                   v-model="neuronLayers[index-1]"
                                   dense
                                   style="margin-right: 10px"
@@ -267,7 +268,6 @@ export default {
     gpuGenerator: false,
     // default type is Vanilla GAN:
     generatorModel: 'Vanilla GAN architecture',
-    dropOutGenerator: [],
     nbLayersGenerator: 2,
     dropOutRange: [0, 0.1, 0.15, 0.2, 0.25, 0.3, 0.33],
     inChannelsGenerator: '',
@@ -289,16 +289,31 @@ export default {
     showUsedInitGInfo: false,
     usedInitGInfo: '',
     usedInitGDescriptionInfo: '',
-    showoutGeneratorGpuInfo: false
+    showoutGeneratorGpuInfo: false,
+    rules: {
+      positiv: v => !v || v > 0
+    }
 
   }),
   computed: {
     validGeneratorForm () {
       // form is valid when all necessary fields are filled:
-      return this.generatorModel !== '' &&
-        this.dropOutGenerator !== '' &&
-        this.nbLayersGenerator >= 2 && this.nbLayersGenerator <= 5 &&
-        this.inChannelsGenerator !== ''
+      if (this.generatorModel === 'Vanilla GAN architecture' || this.generatorModel === 'Wasserstein GAN architecture') {
+        for (let neuron in this.neuronLayers) {
+          if (neuron <= 0) {
+            return false
+          }
+        }
+        return this.generatorModel !== '' &&
+      this.dropOutGenerator !== '' &&
+      this.nbLayersGenerator >= 2 && this.nbLayersGenerator <= 4 &&
+      this.inChannelsGenerator !== ''
+      } else {
+        return this.generatorModel !== '' &&
+      this.dropOutGenerator !== '' &&
+      this.nbLayersGenerator >= 2 && this.nbLayersGenerator <= 4 &&
+      this.inChannelsGenerator !== ''
+      }
     },
     validTrainedGeneratorForm () {
       return this.trainedGeneratorPath !== ''
@@ -319,6 +334,9 @@ export default {
     },
     momentumBatchN () {
       return Array(this.nbLayersGenerator).fill(0.1)
+    },
+    dropOutGenerator () {
+      return Array(this.nbLayersGenerator).fill(0)
     }
   },
   methods: {

@@ -69,9 +69,10 @@
                           <div v-show="v_wArchitecture" style="display: flex;">
                               <td v-for="(index, pos) in nbLayersDiscriminator+1" :key="pos" width="100%">
                                 <v-text-field
-                                  v-bind:label="`Number Of neurons for layer ${index-1} :`"
+                                  v-bind:label="`Number Of neurons for layer ${index-1} *:`"
                                   type="number"
                                   outlined
+                                  :rules="[rules.positiv]"
                                   v-model="neuronLayers[index-1]"
                                   dense
                                   style="margin-right: 10px"
@@ -163,7 +164,7 @@
                       </div>
                     </v-card-actions>
                 </v-flex>
-                <small>*indicates required field</small>
+                <small><b>*indicates required field</b></small>
             </form>
             </v-card>
             <v-card v-show="trainedModel">
@@ -293,7 +294,10 @@ export default {
     showUsedInitDInfo: false,
     usedInitDInfo: '',
     usedInitDDescriptionInfo: '',
-    showoutDiscriminatorGpuInfo: false
+    showoutDiscriminatorGpuInfo: false,
+    rules: {
+      positiv: v => !v || v > 0
+    }
   }),
   created () {
     EventBus.$on('created-generator-config', generatorElement => {
