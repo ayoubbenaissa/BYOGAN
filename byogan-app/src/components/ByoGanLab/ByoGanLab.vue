@@ -326,11 +326,6 @@
           <GeneratorConfig :boolConfigGenerator="boolConfigGenerator" style="display: inline-block;"/>
           <DiscriminatorConfig :boolConfigDiscriminator="boolConfigDiscriminator" style="display: inline-block;"/>
         </div>
-        <div align="center" justify="center" style="width: 100%;">
-            <img
-              src="../../../static/GANFinal.png"
-              />
-        </div>
         <div style="{
             grid-auto-flow: row;
             display: flex;
@@ -431,6 +426,7 @@
                       :items="items"
                       :items-per-page="6"
                       class="elevation-1"
+                      v-show="showResults"
                     >
                     <template slot="items" slot-scope="props">
                       <td>{{ props.item.name }}</td>

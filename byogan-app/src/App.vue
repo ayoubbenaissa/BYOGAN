@@ -46,9 +46,9 @@
         sideNav: false,
         menuItems: [
           { icon: 'home', title: 'Get Started', link: '/getstarted' },
-          { icon: 'build', title: 'LAB', link: '/byoganlab' },
+          { icon: 'build', title: 'BYOGANLAB', link: '/byoganlab' },
           { icon: 'assessment', title: 'Experimentations', link: '/experimentations' },
-          { icon: 'forum', title: 'Gan Blogs', link: '/blogs' }
+          { icon: 'forum', title: 'Gan Content', link: '/blogs' }
         ]
       }
     }

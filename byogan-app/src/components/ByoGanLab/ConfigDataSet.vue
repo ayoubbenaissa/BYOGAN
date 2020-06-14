@@ -41,7 +41,7 @@
                         ></v-select>
                       <v-btn icon @click="showDataSetTypeInfo = !showDataSetTypeInfo" style="margin-top: 20px; margin-right: 40px;">
                         <v-icon x-small>info</v-icon>
-                        <md-tooltip :md-active.sync="showDataSetTypeInfo">Data set type (traditional prerared data set i.e: MNIST, ImageFolder, csv)</md-tooltip>
+                        <md-tooltip :md-active.sync="showDataSetTypeInfo">chose a defined dataset (i.e: MNIST, FashionMNIST) or a local dataset ImageFolder/CSV</md-tooltip>
                       </v-btn>
                   </div>
                   <div style="
@@ -57,7 +57,7 @@
                     ></v-text-field>
                     <v-btn icon @click="showDataSetPathInfo = !showDataSetPathInfo" style="margin-top: 20px; margin-right: 40px;">
                         <v-icon x-small>info</v-icon>
-                        <md-tooltip :md-active.sync="showDataSetPathInfo">path where dataset should be retrieved/stored. For more info please visit: https://pytorch.org/docs/stable/torchvision/datasets.html</md-tooltip>
+                        <md-tooltip :md-active.sync="showDataSetPathInfo">path where dataset should be retrieved/stored. For more info please visit: <url>https://pytorch.org/docs/stable/torchvision/datasets.html</url></md-tooltip>
                       </v-btn>
                   </div>
                   <div style="display: flex;">
@@ -101,7 +101,7 @@
                     </div>
                   </v-card-actions>
                 </v-flex>
-              <small>*indicates required field</small>
+              <small><b>*indicates required field</b></small>
               </form>
             </v-card>
           </v-dialog>

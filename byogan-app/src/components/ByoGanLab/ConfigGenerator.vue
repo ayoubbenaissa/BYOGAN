@@ -299,11 +299,6 @@ export default {
     validGeneratorForm () {
       // form is valid when all necessary fields are filled:
       if (this.generatorModel === 'Vanilla GAN architecture' || this.generatorModel === 'Wasserstein GAN architecture') {
-        for (let neuron in this.neuronLayers) {
-          if (neuron <= 0) {
-            return false
-          }
-        }
         return this.generatorModel !== '' &&
       this.dropOutGenerator !== '' &&
       this.nbLayersGenerator >= 2 && this.nbLayersGenerator <= 4 &&

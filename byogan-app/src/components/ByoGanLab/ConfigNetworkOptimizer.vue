@@ -19,6 +19,7 @@
                   v-model="networkLR"
                   v-bind:label="`Learning rate for ${this.network} optimizer:`"
                   outlined
+                  :rules="[rules.positiv]"
                   required
                   style="height: 45px; margin-bottom: 10px"
                 ></v-text-field>
@@ -26,6 +27,7 @@
                   v-model="networkBetaOne"
                   label="Beta1 value for Adam : "
                   v-show="nAdam"
+                  :rules="[rules.positiv]"
                   outlined
                   required
                   style="height: 45px; margin-bottom: 10px"
@@ -34,6 +36,7 @@
                   v-model="networkBetaTwo"
                   label="Beta2 value for Adam : "
                   v-show="nAdam"
+                  :rules="[rules.positiv]"
                   outlined
                   required
                   style="height: 45px; margin-bottom: 10px"
@@ -169,7 +172,10 @@ export default {
     nOptimCentered: false,
     showoutOptimNosterov: false,
     nOptimNosterov: false,
-    networkOptimizerState: (this.network === 'Discriminator') ? 'Instantiate D_Optim' : 'Instantiate G_Optim'
+    networkOptimizerState: (this.network === 'Discriminator') ? 'Instantiate D_Optim' : 'Instantiate G_Optim',
+    rules: {
+      positiv: v => !v || v > 0
+    }
   }),
   computed: {
     nAdam () {

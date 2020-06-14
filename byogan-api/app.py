@@ -565,8 +565,8 @@ def trainGAN():
     necessary_elements['discriminator'].to(torch.device(necessary_elements['deviceDiscriminator']))
     necessary_elements['generator'].to(torch.device(necessary_elements['deviceGenerator']))
     necessary_elements['training'] = True
-    best_KL = -30
-    worst_KL = 30
+    best_KL = 30
+    worst_KL = 0
     start_time = time.time()
     for i in range(nb_batches):
         if (unrolling_step != 0):
@@ -662,15 +662,15 @@ def trainGAN():
                                 necessary_elements['batch_size'])
         G_Loss.append(g_error.item())
         kl_div_item = (F.kl_div(fake_generated, real_batch)).item()
-        KL_div.append(kl_div_item)
-        if (kl_div_item > best_KL):
-            best_KL = kl_div_item
+        KL_div.append(abs(kl_div_item))
+        if (abs(kl_div_item) < best_KL):
+            best_KL = abs(kl_div_item)
             best_generated = fake_generated
-        if (kl_div_item < worst_KL):
-            worst_KL = kl_div_item
+        if (abs(kl_div_item) > worst_KL):
+            worst_KL = abs(kl_div_item)
             worst_generated = fake_generated
         tmpJS = 0.5 * (real_batch + fake_generated)
-        JS_div.append((0.5*(F.kl_div(real_batch, tmpJS) + F.kl_div(fake_generated, tmpJS))).item())
+        JS_div.append(abs((0.5*(F.kl_div(real_batch, tmpJS) + F.kl_div(fake_generated, tmpJS))).item()))
 
         #when we want to train G more:
         if (train_more_Generator > 0):
@@ -688,9 +688,9 @@ def trainGAN():
                                         real_batch, necessary_elements['apply_feature_matching'],
                                         necessary_elements['batch_size'])
                 G_Loss.append(g_error.item())
-                KL_div.append((F.kl_div(real_batch, fake_generated)).item())
+                KL_div.append(abs((F.kl_div(fake_generated, real_batch)).item()))
                 tmpJS = 0.5 * (real_batch + fake_generated)
-                JS_div.append((0.5*(F.kl_div(real_batch, tmpJS) + F.kl_div(fake_generated, tmpJS))).item())
+                JS_div.append(abs((0.5*(F.kl_div(real_batch, tmpJS) + F.kl_div(fake_generated, tmpJS))).item()))
         if (necessary_elements['apply_occasional_flip'] and necessary_elements['index_batch'] % necessary_elements['occasional_flip'] == 0):
             necessary_elements['flip'] = False
         track_convergence_DS.extend([(F.kl_div(real_batch, fake_generated)).item(),
