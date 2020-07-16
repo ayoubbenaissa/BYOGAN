@@ -4,16 +4,16 @@ byo-gan product for configuring, training and visualizing GANs.
 
 ## Build Setup
 
-** Install Python dependencies:
+** Install Python dependencies (Backend):
 
-1/ Use Docker [link](https://docs.docker.com/get-docker/):
+  *** Use [Docker](https://docs.docker.com/get-docker/):
 ```
 cd byogan_api
 docker build -t docker_image .
 docker run --network="host" docker_image
 ```
 
-2/ Install dependencies manually:
+  *** Or Install dependencies manually:
 
 install python dependencies:
 ```
@@ -22,7 +22,7 @@ pip install requirements.txt
 
 flask run
 ```
-or
+or use conda dependencies
 ```
 cd byogan_api
 conda env create -f env.yml
@@ -31,7 +31,7 @@ flask run
 ```
 
 
-** Install [npm](https://www.npmjs.com/) dependencies:
+** Install [npm](https://www.npmjs.com/) dependencies (Frontend):
 ```
 cd byogan_app
 npm install
@@ -62,3 +62,5 @@ The product allows:
 + configure the Latent Vector
 + apply some training tricks
 + Visualization
+
+To have a better idea of how to use the tool, please have a look at the file 'tool_workflow.README', or refer to the Gif 'tool_demo'
