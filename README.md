@@ -67,4 +67,7 @@ The product allows:
 + apply some training tricks
 + Visualization
 
-To have a better idea of how to use the tool, please have a look at the file [tool_workflow.README](tool_workflow.md), or refer to the Gif [tool_demo.gif](tool_demo.gif)
+To have a better idea of how to use the tool, please have a look at the file [tool_workflow.README](tool_workflow.md), or refer to the Gif [tool_demo.gif](tool_demo.gif) <br />
+
+To have a better idea of the API, please feel free to read the documentation file (README.md) in byogan-api folder or check the swagger api documentation folder. It is also recommended to have a look at [swagger documentation of byogan](https://app.swaggerhub.com/apis/AyoubBenaissa/BYOGAN_api/1.0.0).
+
