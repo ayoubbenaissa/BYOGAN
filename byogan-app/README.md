@@ -71,4 +71,4 @@ The configuration tool looks as follows (each icon on the right of the configura
 <br />
 
 <br />
-To have a better understanding the the tool workflow please have a look at the documentation file [tool_workflow.README](../tool_workflow.md), or refer to the Gif [tool_demo.gif](../tool_demo.gif)
+To have a better understanding the the tool workflow please have a look at the documentation file [tool_workflow.README](https://github.com/BYOGan/BYOGan/blob/master/tool_workflow.md), or refer to the Gif [tool_demo.gif](https://github.com/BYOGan/BYOGan/blob/master/tool_demo.gif)
