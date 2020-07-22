@@ -76,10 +76,9 @@
                             <div v-show="v_wArchitecture" style="display: flex;">
                               <td v-for="(index, pos) in nbLayersGenerator+1" :key="pos" width="100%">
                                 <v-text-field
-                                  v-bind:label="`Number Of neurons for layer ${index-1} :`"
+                                  v-bind:label="`Number Of neurons for layer ${index-1} *:`"
                                   type="number"
                                   outlined
-                                  required
                                   :rules="[rules.positiv]"
                                   v-model="neuronLayers[index-1]"
                                   dense
@@ -298,23 +297,16 @@ export default {
   computed: {
     validGeneratorForm () {
       // form is valid when all necessary fields are filled:
-      if (this.generatorModel === 'Vanilla GAN architecture' || this.generatorModel === 'Wasserstein GAN architecture') {
-        return this.generatorModel !== '' &&
+      return this.generatorModel !== '' &&
       this.dropOutGenerator !== '' &&
       this.nbLayersGenerator >= 2 && this.nbLayersGenerator <= 4 &&
       this.inChannelsGenerator !== ''
-      } else {
-        return this.generatorModel !== '' &&
-      this.dropOutGenerator !== '' &&
-      this.nbLayersGenerator >= 2 && this.nbLayersGenerator <= 4 &&
-      this.inChannelsGenerator !== ''
-      }
     },
     validTrainedGeneratorForm () {
       return this.trainedGeneratorPath !== ''
     },
     nbLayersRange () {
-      return (this.generatorModel === 'Deep Convolutional GAN architecture') ? [2, 3, 4] : this.$parent.nbLayersRange
+      return (this.generatorModel === 'Deep Convolutional GAN architecture') ? [2, 3, 4] : [2, 3, 4, 5]
     },
     v_wArchitecture () {
       // ANN-based networks:
