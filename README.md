@@ -73,7 +73,7 @@ This tool offers configuration of the whole GAN framework with ease, and it targ
 + beginners: by offering a quick set-up for the different components of a GAN.
 + practitionners: by offering the possibility to apply custom configuration and run experimenst in order to understand better GANs. <br />
 
-![use cases](github.com/BYOGan/BYOGan/blob/master/byogan-app/ToolUIs/tool_use-cases.png)
+![use cases](./byogan-app/ToolUIs/tool_use-cases.png)
 
 <br />
 
