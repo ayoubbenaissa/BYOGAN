@@ -67,12 +67,30 @@ The product allows:
 + apply some training tricks
 + Visualization
 
+### Tool use-cases:
+This tool offers configuration of the whole GAN framework with ease, and it targets:
+
++ beginners: by offering a quick set-up for the different components of a GAN.
++ practitionners: by offering the possibility to apply custom configuration and run experimenst in order to understand better GANs. <br />
+
+![use cases](../byogan-app/ToolUIs/tool_use-cases.png)
+
+<br />
+
+### Tool Workflow:
+
 To have a better idea of how to use the tool, please have a look at the file [tool_workflow.README](tool_workflow.md), or refer to the Gif [tool_demo.gif](tool_demo.gif) <br />
 
+<br />
+
+### Tool API documentation:
+
 To have a better idea of the API, please feel free to read the documentation file (README.md) in byogan-api folder or check the swagger api documentation folder. It is also recommended to have a look at [swagger documentation of byogan](https://app.swaggerhub.com/apis/AyoubBenaissa/BYOGAN_api/1.0.0). <br />
+
+<br />
+
+### Tool configuration and understanding:
 
 To have a better idea of how to use the tool, please have a look at the file [tool_workflow.README](tool_workflow.md), or refer to the Gif [tool_demo.gif](tool_demo.gif). <br />
 The folder **configuration scenarios** includes basic use case scenarios of BYOGAN with GAN, W-GAN and DC-GAN architectures, so it can also help understand the tool configuration process. <br />
 In addition, the folder byogan-app contains a documentation file with some UIs examples.
-
-
