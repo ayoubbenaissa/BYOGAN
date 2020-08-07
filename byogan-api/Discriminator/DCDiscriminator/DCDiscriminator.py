@@ -30,65 +30,62 @@ class DCDiscriminator(nn.Module):
         #since the cnn kernels depend heavily on the image size, our tool covers only 64*64 & 28*28 images 
         if (img_size == 64):
             if(n_layers==2):
-                self.main = nn.Sequential(
-                    *conv_layer(in_size, 64, 4, 2, 1, do=0, bn=False),
-                    *conv_layer(64, 256, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]),
-                    *conv_layer(256, 512, 8, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]),
-                )
-                self.out = nn.Sequential(*out_layer(512, 1, 6))
+                self.main = nn.ModuleList(conv_layer(in_size, 64, 4, 2, 1, do=0, bn=False))
+                self.main.extend(conv_layer(64, 256, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]))
+                self.main.extend(conv_layer(256, 512, 8, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]))
+                
+                self.out = nn.ModuleList(out_layer(512, 1, 6))
 
             if(n_layers==3):
-                self.main = nn.Sequential(
-                    *conv_layer(in_size, 64, 4, 2, 1, do=0, bn=False),
-                    *conv_layer(64, 128, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]),
-                    *conv_layer(128, 256, 4, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]),
-                    *conv_layer(256, 512, 4, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]),
-                    )
-                self.out = nn.Sequential(*out_layer(512, 1))
+                self.main = nn.ModuleList(conv_layer(in_size, 64, 4, 2, 1, do=0, bn=False))
+                self.main.extend(conv_layer(64, 128, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]))
+                self.main.extend(conv_layer(128, 256, 4, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]))
+                self.main.extend(conv_layer(256, 512, 4, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]))
+                
+                self.out = nn.ModuleList(out_layer(512, 1))
 
             if(n_layers==4):
-                self.main = nn.Sequential(
-                    *conv_layer(in_size, 64, 4, 2, 1, do=0, bn=False),
-                    *conv_layer(64, 128, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]),
-                    *conv_layer(128, 256, 4, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]),
-                    *conv_layer(256, 512, 3, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]),
-                    *conv_layer(512, 1028, 3, 2, 1, do=drop_out[3], bn=batchNorm[3], epsilon=eps[3], mmt=momentum[3]),
-                )
-                self.out = nn.Sequential(*out_layer(1028, 1, 2))
+                self.main = nn.ModuleList(conv_layer(in_size, 64, 4, 2, 1, do=0, bn=False))
+                self.main.extend(conv_layer(64, 128, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]))
+                self.main.extend(conv_layer(128, 256, 4, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]))
+                self.main.extend(conv_layer(256, 512, 3, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]))
+                self.main.extend(conv_layer(512, 1028, 3, 2, 1, do=drop_out[3], bn=batchNorm[3], epsilon=eps[3], mmt=momentum[3]))
+                
+                self.out = nn.ModuleList(out_layer(1028, 1, 2))
 
         if (img_size == 28):
             if(n_layers==2):
-                self.main = nn.Sequential(
-                    *conv_layer(in_size, 64, 3, 1, 0, do=0, bn=False),
-                    *conv_layer(64, 256, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]),
-                    *conv_layer(256, 512, 5, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]),
-                )
-                self.out = nn.Sequential(*out_layer(512, 1, 6))
+                self.main = nn.ModuleList(conv_layer(in_size, 64, 3, 1, 0, do=0, bn=False))
+                self.main.extend(conv_layer(64, 256, 4, 2, 1, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]))
+                self.main.extend(conv_layer(256, 512, 5, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]))
+                
+                self.out = nn.ModuleList(out_layer(512, 1, 6))
 
             if(n_layers==3):
-                self.main = nn.Sequential(
-                    *conv_layer(in_size, 64, 3, 1, 0, do=0, bn=False),
-                    *conv_layer(64, 128, 3, 1, 0, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]),
-                    *conv_layer(128, 256, 5, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]),
-                    *conv_layer(256, 512, 5, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]),
-                    )
-                self.out = nn.Sequential(*out_layer(512, 1, 5))
+                self.main = nn.ModuleList(conv_layer(in_size, 64, 3, 1, 0, do=0, bn=False))
+                self.main.extend(conv_layer(64, 128, 3, 1, 0, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]))
+                self.main.extend(conv_layer(128, 256, 5, 2, 1, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]))
+                self.main.extend(conv_layer(256, 512, 5, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]))
+                
+                self.out = nn.ModuleList(out_layer(512, 1, 5))
 
             if(n_layers==4):
-                self.main = nn.Sequential(
-                    *conv_layer(in_size, 64, 3, 1, 0, do=0, bn=False),
-                    *conv_layer(64, 128, 3, 1, 0, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]),
-                    *conv_layer(128, 256, 3, 1, 0, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]),
-                    *conv_layer(256, 512, 5, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]),
-                    *conv_layer(512, 1028, 5, 2, 1, do=drop_out[3], bn=batchNorm[3], epsilon=eps[3], mmt=momentum[3]),
-                )
-                self.out = nn.Sequential(*out_layer(1028, 1, 4))
+                self.main = nn.ModuleList(conv_layer(in_size, 64, 3, 1, 0, do=0, bn=False))
+                self.main.extend(conv_layer(64, 128, 3, 1, 0, do=drop_out[0], bn=batchNorm[0], epsilon=eps[0], mmt=momentum[0]))
+                self.main.extend(conv_layer(128, 256, 3, 1, 0, do=drop_out[1], bn=batchNorm[1], epsilon=eps[1], mmt=momentum[1]))
+                self.main.extend(conv_layer(256, 512, 5, 2, 1, do=drop_out[2], bn=batchNorm[2], epsilon=eps[2], mmt=momentum[2]))
+                self.main.extend(conv_layer(512, 1028, 5, 2, 1, do=drop_out[3], bn=batchNorm[3], epsilon=eps[3], mmt=momentum[3]))
+                
+                self.out = nn.ModuleList(out_layer(1028, 1, 4))
 
 
-    def forward(self, x, Feature_Matching=False):
-        x = self.main(x)
-        #feature matching technique will be applied on the last hidden layer
+    def forward(self, input, Feature_Matching=False):
+        for f in self.main:
+            input = f(input)
+        #feature matching will applied on the last hidden layer:
         if(Feature_Matching):
-            return x
-        #otherwise, use the output generated by the last layer (uni-value)
-        return self.out(x)
+            return input
+        #otherwise, we use the output of the last unit:
+        for out_lay in self.out:
+            input = out_lay(input)
+        return input

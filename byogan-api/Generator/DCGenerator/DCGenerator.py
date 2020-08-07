@@ -23,78 +23,52 @@ class DCGenerator(nn.Module):
             ]
         
         #since the cnn kernels depend on the image size, our tool will cover 64*64 & 28*28 images
+        # layers are created using ModuleList :
         if (img_size == 64):
             if(n_layers==2):
-                self.network = nn.Sequential(
-                    #input layer:
-                    *convT_layer(z_dim, 512, 4, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0), #512 (4*4)
-                    #2 hidden layers:
-                    *convT_layer(512, 128, 8, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]), #128 (12*12) 
-                    *convT_layer(128, 64, 12, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]),  #64 (32*32)
-                    #output layer:
-                    *out_layer() #3 (64*64)
-                    )
+                self.main = nn.ModuleList(convT_layer(z_dim, 512, 4, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0))
+                self.main.extend(convT_layer(512, 128, 8, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]))
+                self.main.extend(convT_layer(128, 64, 12, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]))
+                self.main.extend(out_layer())
 
             if(n_layers==3):
-                self.network = nn.Sequential(
-                    #input
-                    *convT_layer(z_dim, 512,4, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0),
-                    #3 hidden layers
-                    *convT_layer(512, 256, 4, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]),
-                    *convT_layer(256, 128, 4, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]),
-                    *convT_layer(128, 64, 4, 2, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]),
-                    #output
-                    *out_layer(),
-                    )
+                self.main = nn.ModuleList(convT_layer(z_dim, 512,4, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0))
+                self.main.extend(convT_layer(512, 256, 4, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]))
+                self.main.extend(convT_layer(256, 128, 4, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]))
+                self.main.extend(convT_layer(128, 64, 4, 2, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]))
+                self.main.extend(out_layer())
 
             if(n_layers==4):
-                self.network = nn.Sequential(
-                    nn.ConvTranspose2d(z_dim, 1024, 3, 1, 0), #1024 (3*3)
-
-                    *convT_layer(1024, 512, 3, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]), #512 (5*5)
-                    *convT_layer(512, 256, 2, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]), #256 (8*8)
-                    *convT_layer(256, 128, 2, 2, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]), #128 (14*14)
-                    *convT_layer(128, 64, 9, 2, 1, do=drop_out[3], batchN= batchNorm[3], epsilon= eps[3], mmt= momentum[3]), #64 (33*33)
-
-                    *out_layer(k=2), #3 (64*64)
-                )
+                self.main = nn.ModuleList(convT_layer(z_dim, 1024, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0))
+                self.main.extend(convT_layer(1024, 512, 3, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]))
+                self.main.extend(convT_layer(512, 256, 2, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]))
+                self.main.extend(convT_layer(256, 128, 2, 2, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]))
+                self.main.extend(convT_layer(128, 64, 9, 2, 1, do=drop_out[3], batchN= batchNorm[3], epsilon= eps[3], mmt= momentum[3]))
+                self.main.extend(out_layer(k=2))
             
         if (img_size == 28):
                 if(n_layers==2):
-                    self.network = nn.Sequential(
-                        #input layer:
-                        *convT_layer(z_dim, 256, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0), #512 (4*4)
-                        #2 hidden layers:
-                        *convT_layer(256, 128, 4, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]), #128 (12*12) 
-                        *convT_layer(128, 64, 5, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]),  #64 (32*32)
-                        #output layer:
-                        *out_layer(6)
-                        )
+                    self.main = nn.ModuleList(convT_layer(z_dim, 256, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0))
+                    self.main.extend(convT_layer(256, 128, 4, 2, 1, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]))
+                    self.main.extend(convT_layer(128, 64, 5, 2, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]))
+                    self.main.extend(out_layer(6))
 
                 if(n_layers==3):
-                    self.network = nn.Sequential(
-                        #input
-                        *convT_layer(z_dim, 512, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0),
-                        #3 hidden layers
-                        *convT_layer(512, 256, 3, 1, 0, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]),
-                        *convT_layer(256, 128, 3, 1, 0, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]),
-                        *convT_layer(128, 64, 4, 2, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]),
-                        #output
-                        *out_layer(4),
-                        )
+                    self.main = nn.ModuleList(convT_layer(z_dim, 512, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0))
+                    self.main.extend(convT_layer(512, 256, 3, 1, 0, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]))
+                    self.main.extend(convT_layer(256, 128, 3, 1, 0, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]))
+                    self.main.extend(convT_layer(128, 64, 4, 2, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]))
+                    self.main.extend(out_layer(4))
 
                 if(n_layers==4):
-                    self.network = nn.Sequential(
-                        #input
-                        *convT_layer(z_dim, 1024, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0),
-                        #4 hidden
-                        *convT_layer(1024, 512, 3, 1, 0, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]), #512 (5*5)
-                        *convT_layer(512, 256, 3, 1, 0, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]), #256 (8*8)
-                        *convT_layer(256, 128, 3, 1, 1, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]), #128 (14*14)
-                        *convT_layer(128, 64, 3, 1, 0, do=drop_out[3], batchN= batchNorm[3], epsilon= eps[3], mmt= momentum[3]), #64 (33*33)
-                        #out layer
-                        *out_layer(k=4),
-                    )
+                    self.main = nn.ModuleList(convT_layer(z_dim, 1024, 3, 1, 0, do=0, batchN= False, epsilon=0, mmt= 0))
+                    self.main.extend(convT_layer(1024, 512, 3, 1, 0, do=drop_out[0], batchN= batchNorm[0], epsilon= eps[0], mmt= momentum[0]))
+                    self.main.extend(convT_layer(512, 256, 3, 1, 1, do=drop_out[1], batchN= batchNorm[1], epsilon= eps[1], mmt= momentum[1]))
+                    self.main.extend(convT_layer(256, 128, 3, 1, 0, do=drop_out[2], batchN= batchNorm[2], epsilon= eps[2], mmt= momentum[2]))
+                    self.main.extend(convT_layer(128, 64, 4, 2, 1, do=drop_out[3], batchN= batchNorm[3], epsilon= eps[3], mmt= momentum[3]))
+                    self.main.extend(out_layer(k=4))
 
-    def forward(self, x):
-        return self.network(x)
+    def forward(self, input):
+        for f in self.main:
+            input = f(input)
+        return input
